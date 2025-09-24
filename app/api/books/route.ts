@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongodb";
 import { Book } from "@/models/book.model";
+import { bookSchema } from "@/lib/validations/book";
 
 export async function GET() {
   try {
@@ -16,11 +17,20 @@ export async function GET() {
   }
 }
 
-export async function POST(req: Request) {
+export async function POST(request: Request) {
   try {
     await connectDB();
-    const data = await req.json();
-    const newBook = await Book.create(data);
+    const body = await request.json();
+    const parsed = bookSchema.safeParse(body);
+
+    if (!parsed.success) {
+      return NextResponse.json(
+        { error: parsed.error.flatten().fieldErrors },
+        { status: 400 },
+      );
+    }
+
+    const newBook = await Book.create(parsed.data);
     return NextResponse.json(newBook, { status: 201 });
   } catch (error) {
     return NextResponse.json(

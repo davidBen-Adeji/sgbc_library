@@ -6,7 +6,7 @@ import mongoose, {
   InferSchemaType,
 } from "mongoose";
 
-const bookSchema = new Schema<IBook>(
+const bookSchema = new Schema(
   {
     title: {
       type: String,

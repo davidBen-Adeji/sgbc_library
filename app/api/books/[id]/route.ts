@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import { connectDB } from "@/lib/mongodb";
 import { Book } from "@/models/book.model";
 import { bookSchema } from "@/lib/validations/book";
+import handleError from "@/lib/handleError";
 
 interface Params {
   params: Promise<{ id: string }>;
@@ -30,10 +31,7 @@ export async function GET(req: NextRequest, { params }: Params) {
     return NextResponse.json(book, { status: 200 });
   } catch (error) {
     console.error("Error fetching single book:", error);
-    return NextResponse.json(
-      { error: "Failed to fetch book" },
-      { status: 500 },
-    );
+    return handleError("Failed to fetch book", error);
   }
 }
 
@@ -61,10 +59,7 @@ export async function PUT(request: NextRequest, { params }: Params) {
 
     return NextResponse.json(updatedBook, { status: 200 });
   } catch (error) {
-    return NextResponse.json(
-      { error: "Failed to update book" },
-      { status: 500 },
-    );
+    return handleError("Failed to update book", error);
   }
 }
 
@@ -82,9 +77,6 @@ export async function DELETE(request: NextRequest, { params }: Params) {
       status: 200,
     });
   } catch (error) {
-    return NextResponse.json(
-      { error: "Failed to delete book" },
-      { status: 500 },
-    );
+    return handleError("Failed to delete book", error);
   }
 }

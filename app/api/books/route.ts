@@ -2,6 +2,7 @@ import { NextResponse, NextRequest } from "next/server";
 import { connectDB } from "@/lib/mongodb";
 import { Book } from "@/models/book.model";
 import { bookSchema } from "@/lib/validations/book";
+import handleError from "@/lib/handleError";
 
 export async function GET() {
   try {
@@ -10,10 +11,7 @@ export async function GET() {
 
     return NextResponse.json(books, { status: 200 });
   } catch (error) {
-    return NextResponse.json(
-      { error: "Failed to fetch books", details: error.message },
-      { status: 500 },
-    );
+    return handleError("Failed to fetch books", error);
   }
 }
 
@@ -33,9 +31,6 @@ export async function POST(request: NextRequest) {
     const newBook = await Book.create(parsed.data);
     return NextResponse.json(newBook, { status: 201 });
   } catch (error) {
-    return NextResponse.json(
-      { error: "Failed to create book" },
-      { status: 500 },
-    );
+    return handleError("Failed to create book", error);
   }
 }

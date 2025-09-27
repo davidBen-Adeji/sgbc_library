@@ -59,7 +59,7 @@ export async function PUT(request: NextRequest, { params }: Params) {
       return NextResponse.json({ error: "Book not found" }, { status: 404 });
     }
 
-    return NextResponse.json(updatedBook);
+    return NextResponse.json(updatedBook, { status: 200 });
   } catch (error) {
     return NextResponse.json(
       { error: "Failed to update book" },
@@ -79,7 +79,7 @@ export async function DELETE(request: NextRequest, { params }: Params) {
     }
 
     return NextResponse.json(deletedBook, {
-      message: "Book deleted successfully",
+      status: 200,
     });
   } catch (error) {
     return NextResponse.json(

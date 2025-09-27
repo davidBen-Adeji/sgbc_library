@@ -72,7 +72,7 @@ const bookSchema = new Schema<IBook>(
 );
 
 bookSchema.index({ title: 1 });
-bookSchema.index({ ISBN: 1 }, { unique: true });
+bookSchema.index({ ISBN: 1 });
 bookSchema.index({ author: 1 });
 
 export const Book: Model<IBook> =

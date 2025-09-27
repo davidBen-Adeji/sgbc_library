@@ -1,5 +1,10 @@
-import mongoose, { Schema, model, models, Model } from "mongoose";
-import { IBook } from "./book.types";
+import mongoose, {
+  Schema,
+  model,
+  models,
+  Model,
+  InferSchemaType,
+} from "mongoose";
 
 const bookSchema = new Schema<IBook>(
   {
@@ -75,5 +80,7 @@ bookSchema.index({ title: 1 });
 bookSchema.index({ ISBN: 1 });
 bookSchema.index({ author: 1 });
 
-export const Book: Model<IBook> =
-  models.Book || model<IBook>("Book", bookSchema);
+export type BookType = InferSchemaType<typeof bookSchema>;
+
+export const Book: Model<BookType> =
+  models.Book || model<BookType>("Book", bookSchema);

@@ -1,7 +1,5 @@
 export interface Params {
-  params: {
-    id: string;
-    category: string;
-    author: string;
-  };
+  id: string;
+  category: string;
+  author: string;
 }

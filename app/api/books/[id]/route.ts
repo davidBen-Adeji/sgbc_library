@@ -1,15 +1,15 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import mongoose from "mongoose";
 import { connectDB } from "@/lib/mongodb";
 import { Book } from "@/models/book.model";
 import { Params } from "@/lib/types";
 import { bookSchema } from "@/lib/validations/book";
 
-export async function GET(req: Request, { params }: Params) {
+export async function GET(req: NextRequest, { params }: Params) {
   try {
     await connectDB();
 
-    const { id } = params;
+    const { id } = await params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return NextResponse.json(
@@ -34,11 +34,11 @@ export async function GET(req: Request, { params }: Params) {
   }
 }
 
-export async function PUT(request: Request, { params }: Params) {
+export async function PUT(request: NextRequest, { params }: Params) {
   try {
     await connectDB();
     const body = await request.json();
-
+    const { id } = await params;
     // ✅ Full validation required
     const parsed = bookSchema.safeParse(body);
     if (!parsed.success) {
@@ -48,7 +48,7 @@ export async function PUT(request: Request, { params }: Params) {
       );
     }
 
-    const updatedBook = await Book.findByIdAndUpdate(params.id, parsed.data, {
+    const updatedBook = await Book.findByIdAndUpdate(id, parsed.data, {
       new: true,
     });
 
@@ -65,10 +65,11 @@ export async function PUT(request: Request, { params }: Params) {
   }
 }
 
-export async function DELETE(request: Request, { params }: Params) {
+export async function DELETE(request: NextRequest, { params }: Params) {
   try {
     await connectDB();
-    const deletedBook = await Book.findByIdAndDelete(params.id);
+    const { id } = await params;
+    const deletedBook = await Book.findByIdAndDelete(id);
 
     if (!deletedBook) {
       return NextResponse.json({ error: "Book not found" }, { status: 404 });

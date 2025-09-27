@@ -1,14 +1,14 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { connectDB } from "@/lib/mongodb";
 import { Book } from "@/models/book.model";
 import { Params } from "@/lib/types";
 
-export async function GET(req: Request, { params }: Params) {
+export async function GET(req: NextRequest, { params }: Params) {
   try {
     await connectDB();
-
+    const { author } = await params;
     // Decode category for multi-word values
-    const decodedAuthor = decodeURIComponent(params.author);
+    const decodedAuthor = decodeURIComponent(author);
 
     if (!decodedAuthor || decodedAuthor.trim() === "") {
       return NextResponse.json(

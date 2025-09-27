@@ -5,7 +5,10 @@ import { Book } from "@/models/book.model";
 import { Params } from "@/lib/types";
 import { bookSchema } from "@/lib/validations/book";
 
-export async function GET(req: NextRequest, { params }: Params) {
+export async function GET(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
+) {
   try {
     await connectDB();
 

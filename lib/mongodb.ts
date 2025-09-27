@@ -1,5 +1,16 @@
 import mongoose from "mongoose";
 
+declare global {
+  // Allow global `mongoose` to be cached
+  // eslint-disable-next-line no-var
+  var mongoose:
+    | {
+        conn: typeof mongoose | null;
+        promise: Promise<typeof mongoose> | null;
+      }
+    | undefined;
+}
+
 const MONGODB_URI = process.env.MONGODB_URI as string;
 
 if (!MONGODB_URI) {

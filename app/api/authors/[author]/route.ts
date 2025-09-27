@@ -30,7 +30,7 @@ export async function GET(
     }
 
     // MongoDB filter
-    const filter: Record<string> = {
+    const filter: Record<string, unknown> = {
       author: { $regex: new RegExp(`^${decodedAuthor}$`, "i") },
     };
 

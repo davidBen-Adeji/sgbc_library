@@ -9,7 +9,7 @@ export async function GET() {
     const books = await Book.find();
 
     return NextResponse.json(books, { status: 200 });
-  } catch (error: any) {
+  } catch (error) {
     return NextResponse.json(
       { error: "Failed to fetch books", details: error.message },
       { status: 500 },

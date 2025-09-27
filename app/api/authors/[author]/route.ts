@@ -28,7 +28,7 @@ export async function GET(req: Request, { params }: Params) {
     }
 
     // MongoDB filter
-    const filter: Record<string, any> = {
+    const filter: Record<string> = {
       author: { $regex: new RegExp(`^${decodedAuthor}$`, "i") },
     };
 

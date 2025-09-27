@@ -8,7 +8,7 @@ export async function GET() {
     const books = await Book.find({ collection: "GTS" });
 
     return NextResponse.json(books, { status: 200 });
-  } catch (error: any) {
+  } catch (error) {
     return NextResponse.json(
       { error: "Failed to fetch gts books", details: error.message },
       { status: 500 },

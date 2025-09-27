@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongodb";
 import { Book } from "@/models/book.model";
-import handleError from "@/lib/handleError";
+import { handleError } from "@/lib/handleError";
 
 export async function GET(
   req: NextRequest,

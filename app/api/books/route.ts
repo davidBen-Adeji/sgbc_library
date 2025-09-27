@@ -2,7 +2,7 @@ import { NextResponse, NextRequest } from "next/server";
 import { connectDB } from "@/lib/mongodb";
 import { Book } from "@/models/book.model";
 import { bookSchema } from "@/lib/validations/book";
-import handleError from "@/lib/handleError";
+import { handleError } from "@/lib/handleError";
 
 export async function GET() {
   try {

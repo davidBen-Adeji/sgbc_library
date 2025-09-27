@@ -1,7 +1,7 @@
 import { NextResponse, NextRequest } from "next/server";
 import { connectDB } from "@/lib/mongodb";
 import { Book } from "@/models/book.model";
-import handleError from "@/lib/handleError";
+import { handleError } from "@/lib/handleError";
 
 export async function GET(
   req: NextRequest,
@@ -53,6 +53,6 @@ export async function GET(
     return NextResponse.json(books, { status: 200 });
   } catch (error) {
     console.error("Error fetching books:", error);
-    return handleError(error, "Failed to fetch books");
+    return handleError("Failed to fetch books", error);
   }
 }

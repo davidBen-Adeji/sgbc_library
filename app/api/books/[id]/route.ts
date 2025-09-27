@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import { connectDB } from "@/lib/mongodb";
 import { Book } from "@/models/book.model";
 import { bookSchema } from "@/lib/validations/book";
-import handleError from "@/lib/handleError";
+import { handleError } from "@/lib/handleError";
 
 interface Params {
   params: Promise<{ id: string }>;

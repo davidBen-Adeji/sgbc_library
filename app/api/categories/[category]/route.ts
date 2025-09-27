@@ -1,9 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongodb";
 import { Book } from "@/models/book.model";
-import { Params } from "@/lib/types";
 
-export async function GET(req: NextRequest, { params }: Params) {
+export async function GET(
+  req: NextRequest,
+  { params }: { params: Promise<{ category: string }> },
+) {
   try {
     await connectDB();
     const { category } = await params;

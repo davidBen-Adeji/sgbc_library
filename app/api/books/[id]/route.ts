@@ -2,13 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 import mongoose from "mongoose";
 import { connectDB } from "@/lib/mongodb";
 import { Book } from "@/models/book.model";
-import { Params } from "@/lib/types";
 import { bookSchema } from "@/lib/validations/book";
 
-export async function GET(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string }> },
-) {
+interface Params {
+  params: Promise<{ id: string }>;
+}
+
+export async function GET(req: NextRequest, { params }: Params) {
   try {
     await connectDB();
 

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
-// import Header from "@/ui/header";
+import MobileHeader from "@/ui/mobileHeader";
 
 export const metadata: Metadata = {
   title: "SGBC Library",
@@ -15,7 +15,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <MobileHeader />
+        {children}
+      </body>
     </html>
   );
 }

@@ -77,7 +77,6 @@ const bookSchema = new Schema(
 );
 
 bookSchema.index({ title: 1 });
-bookSchema.index({ ISBN: 1 });
 bookSchema.index({ author: 1 });
 
 export type BookType = InferSchemaType<typeof bookSchema>;

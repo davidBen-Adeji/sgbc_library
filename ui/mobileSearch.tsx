@@ -23,7 +23,7 @@ export default function MobileSearch({
 
   const router = useRouter();
 
-  const { isLoading, results } = useQuerySearchField<string>(debouncedSearch);
+  const { isLoading, results } = useQuerySearchField(debouncedSearch);
 
   function handleSubmit(e) {
     e.preventDefault();

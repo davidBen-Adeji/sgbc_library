@@ -3,7 +3,7 @@ import axios from "axios";
 import { Book } from "@/lib/types";
 import { booksSchema } from "@/lib/validations/book";
 
-export default function useQuerySearchField<T>(debouncedSearch: T) {
+export default function useQuerySearchField(debouncedSearch: string) {
   const [results, setResults] = useState<Book[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 

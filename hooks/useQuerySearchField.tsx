@@ -19,7 +19,7 @@ export default function useQuerySearchField(debouncedSearch: string) {
           );
           const books = booksSchema.parse(data);
           setResults(books);
-        } catch (err) {
+        } catch (error) {
           if (axios.isAxiosError(error)) {
             console.error(
               "Axios error:",

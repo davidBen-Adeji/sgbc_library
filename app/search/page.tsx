@@ -7,7 +7,7 @@ import NotFound from "@/ui/notFound";
 export default async function SearchPage({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: { query: string };
 }) {
   const { query } = (await searchParams) || "";
   const { data } = await axios.get(

@@ -10,9 +10,9 @@ import MobileSearch from "@/ui/mobileSearch";
 import SiteLogo from "@/ui/siteLogo";
 
 export default function MobileHeader() {
-  const [isSearchVisible, setIsSearchVisible] = useState<bool>(false);
+  const [isSearchVisible, setIsSearchVisible] = useState<boolean>(false);
 
-  function handleToggleSearch(boolVal) {
+  function handleToggleSearch(boolVal: boolean) {
     setIsSearchVisible(boolVal);
   }
   return (

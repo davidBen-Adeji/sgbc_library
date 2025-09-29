@@ -5,7 +5,7 @@ import { booksSchema } from "@/lib/validations/book";
 
 export default function useQuerySearchField<T>(debouncedSearch: T) {
   const [results, setResults] = useState<Book[]>([]);
-  const [isLoading, setIsLoading] = useState<bool>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const returnObject = { results, isLoading };
 

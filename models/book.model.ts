@@ -18,7 +18,7 @@ const bookSchema = new Schema(
       required: [true, "Author is required"],
       trim: true,
     },
-    collection: {
+    bookCollection: {
       type: String,
       enum: {
         values: ["SGBC Library", "GTS"],

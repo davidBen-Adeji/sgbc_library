@@ -6,7 +6,7 @@ import { handleError } from "@/lib/handleError";
 export async function GET() {
   try {
     await connectDB();
-    const books = await Book.find({ collection: "GTS" });
+    const books = await Book.find({ bookCollection: "GTS" });
 
     return NextResponse.json(books, { status: 200 });
   } catch (error) {

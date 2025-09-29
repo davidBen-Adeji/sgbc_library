@@ -36,7 +36,7 @@ export async function GET(
     };
 
     if (collectionFilter.length > 0) {
-      filter.collection = { $in: collectionFilter }; // e.g., ["gts", "sgbc"]
+      filter.bookCollection = { $in: collectionFilter }; // e.g., ["gts", "sgbc"]
     }
 
     const books = await Book.find(filter);

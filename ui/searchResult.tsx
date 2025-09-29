@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Book } from "@/lib/types";
 
-export default function SearchResult({ result }: Book) {
+export default function SearchResult({ result }: { result: Book }) {
   return (
     <Link
       key={result._id}

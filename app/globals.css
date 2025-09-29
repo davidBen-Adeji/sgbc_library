@@ -3,3 +3,7 @@
 .w-minus-30 {
   width: calc(100% - 30px);
 }
+
+.w-minus-50 {
+  width: calc(100% - 50px);
+}

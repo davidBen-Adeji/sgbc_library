@@ -10,10 +10,10 @@ import { useState } from "react";
 import MobileSearch from "@/ui/mobileSearch";
 
 export default function MobileHeader() {
-  const [isSearchVisible, setIsSearchVisible] = useState(false);
+  const [isSearchVisible, setIsSearchVisible] = useState<bool>(false);
 
-  function handleToggleSearch() {
-    setIsSearchVisible((prevState) => !prevState);
+  function handleToggleSearch(boolVal) {
+    setIsSearchVisible(boolVal);
   }
   return (
     <>
@@ -36,7 +36,7 @@ export default function MobileHeader() {
               src="/search.svg"
               width={25}
               height={25}
-              onClick={handleToggleSearch}
+              onClick={() => handleToggleSearch(true)}
             />
             <Image
               className={clsx(`cursor-pointer`)}

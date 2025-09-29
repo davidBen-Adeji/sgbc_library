@@ -18,12 +18,12 @@ export default function MobileSearch({
   isVisible,
   onToggleSearch,
 }: MobileSearchProps) {
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState<string>("");
   const debouncedSearch = useDebounce<string>(search, 500); // 500ms delay
 
   const router = useRouter();
 
-  const { isLoading, results } = useQuerySearchField(debouncedSearch);
+  const { isLoading, results } = useQuerySearchField<string>(debouncedSearch);
 
   function handleSubmit(e) {
     e.preventDefault();

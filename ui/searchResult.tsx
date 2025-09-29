@@ -1,15 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import { Book } from "@/lib/types";
 
-interface BookProps {
-  _id: string;
-  title: string;
-  author: string;
-  ISBN: string;
-}
-
-export default function SearchResult({ result }: BookProps) {
+export default function SearchResult({ result }: Book) {
   return (
     <Link
       key={result._id}

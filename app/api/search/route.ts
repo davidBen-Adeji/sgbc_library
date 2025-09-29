@@ -9,6 +9,8 @@ export async function GET(req: NextRequest) {
 
     const { searchParams } = new URL(req.url);
     const query = searchParams.get("query");
+    const limit = searchParams.get("limit");
+    const limitNumber = +limit || 0;
 
     if (!query) {
       return NextResponse.json([], { status: 200 });
@@ -21,7 +23,7 @@ export async function GET(req: NextRequest) {
         { ISBN: { $regex: query, $options: "i" } },
       ],
     })
-      .limit(10)
+      .limit(limitNumber)
       .lean();
 
     return NextResponse.json(books, { status: 200 });

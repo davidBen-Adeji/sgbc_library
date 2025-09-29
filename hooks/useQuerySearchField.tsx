@@ -1,16 +1,11 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { Book } from "@/lib/types";
+import { booksSchema } from "@/lib/validations/book";
 
-interface Book {
-  _id: string;
-  title: string;
-  author: string;
-  ISBN: string;
-}
-
-export default function useQuerySearchField(debouncedSearch: string) {
+export default function useQuerySearchField<T>(debouncedSearch: T) {
   const [results, setResults] = useState<Book[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<bool>(false);
 
   const returnObject = { results, isLoading };
 
@@ -20,9 +15,10 @@ export default function useQuerySearchField(debouncedSearch: string) {
         setIsLoading(true);
         try {
           const { data } = await axios.get(
-            `/api/search?query=${encodeURIComponent(debouncedSearch)}`,
+            `/api/search?query=${encodeURIComponent(debouncedSearch)}&limit=10`,
           );
-          setResults(data);
+          const books = booksSchema.parse(data);
+          setResults(books);
         } catch (err) {
           if (axios.isAxiosError(error)) {
             console.error(

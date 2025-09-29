@@ -3,11 +3,11 @@
 import clsx from "clsx";
 
 import Image from "next/image";
-import Link from "next/link";
 
 import { useState } from "react";
 
 import MobileSearch from "@/ui/mobileSearch";
+import SiteLogo from "@/ui/siteLogo";
 
 export default function MobileHeader() {
   const [isSearchVisible, setIsSearchVisible] = useState<bool>(false);
@@ -19,16 +19,7 @@ export default function MobileHeader() {
     <>
       <header className={clsx("w-minus-30 mx-auto mt-6")}>
         <div className={clsx("flex justify-between")}>
-          <Link href="/">
-            <Image
-              className={clsx(`cursor-pointer`)}
-              alt="Site Logo"
-              src="/sgbc_logo.svg"
-              width={102}
-              height={50}
-            />
-          </Link>
-
+          <SiteLogo />
           <div className={clsx("flex gap-4 mt-6")}>
             <Image
               className={clsx(`cursor-pointer`)}

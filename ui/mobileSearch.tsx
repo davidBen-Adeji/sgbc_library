@@ -25,7 +25,7 @@ export default function MobileSearch({
 
   const { isLoading, results } = useQuerySearchField(debouncedSearch);
 
-  function handleSubmit(e) {
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const searchTerm = search.trim();
     if (!searchTerm) return;

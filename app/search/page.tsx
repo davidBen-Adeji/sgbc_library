@@ -1,8 +1,8 @@
 import axios from "axios";
 import { booksSchema } from "@/lib/validations/book";
 import { Book } from "@/lib/types";
-import BookCard from "@/ui/bookcard";
 import NotFound from "@/ui/notFound";
+import Books from "@/ui/books";
 
 export default async function SearchPage({
   searchParams,
@@ -20,15 +20,7 @@ export default async function SearchPage({
       <h1 className="w-minus-50 mx-auto mt-7 text-xl font-bold max-w-5xl">
         Showing search results for {`"${query}"`}
       </h1>
-      {books.length === 0 ? (
-        <NotFound />
-      ) : (
-        <ul className="mx-auto my-10 w-minus-50 max-w-5xl flex gap-10 flex-wrap justify-center">
-          {books.map((book) => (
-            <BookCard key={book._id} book={book} />
-          ))}
-        </ul>
-      )}
+      {books.length === 0 ? <NotFound /> : <Books books={books} />}
     </>
   );
 }

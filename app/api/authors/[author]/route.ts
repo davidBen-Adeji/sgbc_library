@@ -23,6 +23,7 @@ export async function GET(
     // Extract query params for collection
     const { searchParams } = new URL(req.url);
     const collectionQuery = searchParams.get("collection"); // e.g., "gts,sgbc"
+    const limit = searchParams.get("limit")?.trim();
 
     let collectionFilter: string[] = [];
 
@@ -31,7 +32,7 @@ export async function GET(
     }
 
     // MongoDB filter
-    const filter: Record<string, unknown> = {
+    const filter: Record<string, string> = {
       author: { $regex: new RegExp(`^${decodedAuthor}$`, "i") },
     };
 
@@ -39,16 +40,13 @@ export async function GET(
       filter.bookCollection = { $in: collectionFilter }; // e.g., ["gts", "sgbc"]
     }
 
-    const books = await Book.find(filter);
+    let data = Book.find(filter);
 
-    if (books.length === 0) {
-      return NextResponse.json(
-        {
-          message: `No author found in category '${decodedAuthor}' for collections: ${collectionFilter.join(", ")}`,
-        },
-        { status: 404 },
-      );
+    if (limit && limit === "3") {
+      data = data.limit(3);
     }
+
+    const books = await data;
 
     return NextResponse.json(books, { status: 200 });
   } catch (error) {

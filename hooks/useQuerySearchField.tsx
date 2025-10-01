@@ -15,7 +15,7 @@ export default function useQuerySearchField(debouncedSearch: string) {
         setIsLoading(true);
         try {
           const { data } = await axios.get(
-            `/api/search?query=${encodeURIComponent(debouncedSearch)}&limit=10`,
+            `/api/search?query=${encodeURIComponent(debouncedSearch)}&loc=searchBox`,
           );
           const books = booksSchema.parse(data);
           setResults(books);

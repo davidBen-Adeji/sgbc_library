@@ -27,6 +27,9 @@ export default function MobileSearch({
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
+    if (search.trim() === "") return;
+
     const searchTerm = search.trim();
     if (!searchTerm) return;
     onToggleSearch(false);
@@ -37,8 +40,7 @@ export default function MobileSearch({
     <article
       className={clsx(
         "w-screen h-screen fixed top-0 z-50 bg-white transition-all duration-300",
-        !isVisible && "left-[100%]",
-        isVisible && "left-0",
+        isVisible ? "left-0" : "left-[100%]",
       )}
     >
       {/* Close button + search bar */}
@@ -75,7 +77,11 @@ export default function MobileSearch({
               <p className="text-gray-500 mt-4">No results found</p>
             )}
             {results.map((result) => (
-              <SearchResult key={result._id} result={result} />
+              <SearchResult
+                key={result._id}
+                result={result}
+                onToggleSearch={onToggleSearch}
+              />
             ))}
           </ul>
         )}

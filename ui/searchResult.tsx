@@ -3,11 +3,20 @@
 import Link from "next/link";
 import { Book } from "@/lib/types";
 
-export default function SearchResult({ result }: { result: Book }) {
+interface SearchResultProps {
+  result: Book;
+  onToggleSearch: (value: boolean) => void;
+}
+
+export default function SearchResult({
+  result,
+  onToggleSearch,
+}: SearchResultProps) {
   return (
     <Link
       key={result._id}
-      href={`/books/${result._id}`} // adjust route
+      href={`/${result._id}`}
+      onClick={() => onToggleSearch(false)}
       className="block mt-4 cursor-pointer p-2 hover:bg-gray-200/50 focus:bg-gray-200/50"
     >
       <li>

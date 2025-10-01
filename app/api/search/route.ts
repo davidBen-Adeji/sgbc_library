@@ -8,27 +8,27 @@ export async function GET(req: NextRequest) {
     await connectDB();
 
     const { searchParams } = new URL(req.url);
-    const query = searchParams.get("query");
-    const limit = searchParams.get("limit");
-    let limitNumber = 0;
-
-    if (limit) {
-      limitNumber = +limit;
-    }
+    const query = searchParams.get("query")?.trim();
+    const loc = searchParams.get("loc")?.trim();
 
     if (!query) {
       return NextResponse.json([], { status: 200 });
     }
 
-    const books = await Book.find({
+    let data = Book.find({
       $or: [
         { title: { $regex: query, $options: "i" } },
         { author: { $regex: query, $options: "i" } },
         { ISBN: { $regex: query, $options: "i" } },
       ],
-    })
-      .limit(limitNumber)
-      .lean();
+    });
+
+    if (loc && loc === "searchBox") {
+      data = data.limit(10);
+    }
+
+    data = data.lean();
+    const books = await data;
 
     return NextResponse.json(books, { status: 200 });
   } catch (error) {

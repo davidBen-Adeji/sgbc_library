@@ -1,5 +1,5 @@
-import BookCardSkeleton from "@/ui/bookCardSkeleton";
+import BooksSkeleton from "@/ui/booksSkeleton";
 
 export default function Loading() {
-  return <BookCardSkeleton />;
+  return <BooksSkeleton />;
 }

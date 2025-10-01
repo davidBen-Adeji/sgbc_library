@@ -6,23 +6,23 @@ import { bookSchema } from "@/lib/validations/book";
 import { handleError } from "@/lib/handleError";
 
 interface Params {
-  params: Promise<{ id: string }>;
+  params: Promise<{ _id: string }>;
 }
 
 export async function GET(req: NextRequest, { params }: Params) {
   try {
     await connectDB();
 
-    const { id } = await params;
+    const { _id } = await params;
 
-    if (!mongoose.Types.ObjectId.isValid(id)) {
+    if (!mongoose.Types.ObjectId.isValid(_id)) {
       return NextResponse.json(
         { error: "Invalid book ID format" },
         { status: 400 },
       );
     }
 
-    const book = await Book.findById(id);
+    const book = await Book.findById(_id);
 
     if (!book) {
       return NextResponse.json({ error: "Book not found" }, { status: 404 });
@@ -39,7 +39,7 @@ export async function PUT(request: NextRequest, { params }: Params) {
   try {
     await connectDB();
     const body = await request.json();
-    const { id } = await params;
+    const { _id } = await params;
     // ✅ Full validation required
     const parsed = bookSchema.safeParse(body);
     if (!parsed.success) {
@@ -49,7 +49,7 @@ export async function PUT(request: NextRequest, { params }: Params) {
       );
     }
 
-    const updatedBook = await Book.findByIdAndUpdate(id, parsed.data, {
+    const updatedBook = await Book.findByIdAndUpdate(_id, parsed.data, {
       new: true,
     });
 
@@ -66,8 +66,8 @@ export async function PUT(request: NextRequest, { params }: Params) {
 export async function DELETE(request: NextRequest, { params }: Params) {
   try {
     await connectDB();
-    const { id } = await params;
-    const deletedBook = await Book.findByIdAndDelete(id);
+    const { _id } = await params;
+    const deletedBook = await Book.findByIdAndDelete(_id);
 
     if (!deletedBook) {
       return NextResponse.json({ error: "Book not found" }, { status: 404 });

@@ -27,7 +27,7 @@ export async function GET(req: NextRequest) {
       data = data.limit(10);
     }
 
-    data = data.lean();
+    data = data;
     const books = await data;
 
     return NextResponse.json(books, { status: 200 });

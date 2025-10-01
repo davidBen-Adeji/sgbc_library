@@ -1,7 +1,7 @@
 import { Book } from "@/lib/types";
 import Image from "next/image";
 
-export default function BookDetails({ book }: Book) {
+export default function BookDetails({ book }: { book: Book }) {
   return (
     <article className="mt-8 max-w-2xl mx-auto md:flex justify-center items-start">
       <Image

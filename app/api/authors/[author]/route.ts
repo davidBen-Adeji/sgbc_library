@@ -1,3 +1,4 @@
+import { FilterQuery } from "mongoose";
 import { NextResponse, NextRequest } from "next/server";
 import { connectDB } from "@/lib/mongodb";
 import { Book } from "@/models/book.model";
@@ -32,7 +33,7 @@ export async function GET(
     }
 
     // MongoDB filter
-    const filter: Record<string, string> = {
+    const filter: FilterQuery<typeof Book> = {
       author: { $regex: new RegExp(`^${decodedAuthor}$`, "i") },
     };
 

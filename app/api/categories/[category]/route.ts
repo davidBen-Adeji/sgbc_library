@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { FilterQuery } from "mongoose";
 import { connectDB } from "@/lib/mongodb";
 import { Book } from "@/models/book.model";
 import { handleError } from "@/lib/handleError";
@@ -32,7 +33,7 @@ export async function GET(
     }
 
     // MongoDB filter
-    const filter: Record<string, string> = {
+    const filter: FilterQuery<typeof Book> = {
       category: { $regex: new RegExp(`^${decodedCategory}$`, "i") },
     };
 

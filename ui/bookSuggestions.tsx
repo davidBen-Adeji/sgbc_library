@@ -9,7 +9,7 @@ export default async function BookSuggestions({
   apiRoute,
   btnHref,
 }: {
-  caption;
+  caption: string;
   apiRoute: string;
   btnHref: string;
 }) {

@@ -2,7 +2,6 @@ import axios from "axios";
 import { booksSchema } from "@/lib/validations/book";
 import { Book } from "@/lib/types";
 import Books from "@/ui/books";
-import Link from "next/link";
 import Pagination from "@/ui/pagination";
 
 export default async function gtsPage({

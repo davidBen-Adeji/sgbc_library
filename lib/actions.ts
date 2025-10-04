@@ -51,7 +51,7 @@ export async function addBook(prevState: ActionState, formData: FormData) {
 
   return {
     success: true,
-    errors,
+    errors: {},
     message: "Book added successfully!",
   };
 }

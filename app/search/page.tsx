@@ -11,7 +11,7 @@ export default async function SearchPage({
   searchParams: { page: string; query: string };
 }) {
   const { page } = await searchParams;
-  const currentPage = page || 1;
+  const currentPage = page || "1";
   const { query } = (await searchParams) || "";
   const { data } = await axios.get(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/search?query=${encodeURIComponent(query)}&page=${currentPage}`,

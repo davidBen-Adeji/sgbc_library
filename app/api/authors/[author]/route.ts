@@ -33,7 +33,7 @@ export async function GET(
     }
 
     // MongoDB filter
-    const filter: FilterQuery<typeof Book> = {
+    const filter: FilterQuery<typeof BookModel> = {
       author: { $regex: new RegExp(`^${decodedAuthor}$`, "i") },
     };
 

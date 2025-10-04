@@ -13,7 +13,8 @@ export async function GET(req: NextRequest) {
     const skip = (page - 1) * limit;
     const books = await BookModel.find({ bookCollection: "GTS" })
       .skip(skip)
-      .limit(limit);
+      .limit(limit)
+      .sort({ createdAt: -1 });
 
     const totalBooks = await BookModel.countDocuments({});
     const totalPages = Math.ceil(totalBooks / limit);

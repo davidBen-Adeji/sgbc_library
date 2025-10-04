@@ -47,6 +47,8 @@ export async function GET(
       data = data.limit(3);
     }
 
+    data = data.sort({ createdAt: -1 });
+
     const books = await data;
 
     return NextResponse.json(books, { status: 200 });

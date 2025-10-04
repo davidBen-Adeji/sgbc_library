@@ -33,6 +33,8 @@ export async function GET(req: NextRequest) {
       data = data.skip(skip).limit(limit);
     }
 
+    data = data.sort({ createdAt: -1 });
+
     const books = await data;
 
     const totalBooks = await BookModel.countDocuments({});

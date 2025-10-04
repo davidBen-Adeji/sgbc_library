@@ -43,7 +43,6 @@ const bookSchema = new Schema(
     },
     ISBN: {
       type: String,
-      unique: true,
       required: [true, "ISBN is required"],
       trim: true,
     },

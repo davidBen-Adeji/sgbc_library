@@ -7,10 +7,12 @@ export const bookSchema = z.object({
   bookCollection: z.enum(["SGBC Library", "GTS"]),
   category: z.string().min(1, "Category is required"),
   description: z.string().optional(),
-  borrowTimes: z.number().min(0),
+  borrowTimes: z.coerce.number().min(0, "number must be at least 0"),
   ISBN: z.string().min(5, "ISBN is required"),
-  availableCopies: z.number().min(0),
-  copies: z.number().min(1),
+  availableCopies: z.coerce
+    .number()
+    .min(0, "Available copies must be at least 0"),
+  copies: z.coerce.number().min(1, "Copies must be at least 1"),
   publisher: z.string().min(1, "Publisher is required"),
   imageURL: z.string().url().optional(),
 });

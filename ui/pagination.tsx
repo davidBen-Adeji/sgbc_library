@@ -64,7 +64,7 @@ function generatePageNumbers(
   total: number,
 ): (number | "...")[] {
   const delta = 2; // how many pages to show around current
-  const range: (number | "...")[] = [];
+  const range: number[] = [];
   const rangeWithDots: (number | "...")[] = [];
   let lastPage: number | undefined;
 
@@ -79,7 +79,7 @@ function generatePageNumbers(
   }
 
   for (let i of range) {
-    if (lastPage) {
+    if (lastPage !== undefined) {
       if (i - lastPage === 2) {
         rangeWithDots.push(lastPage + 1);
       } else if (i - lastPage > 2) {

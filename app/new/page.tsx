@@ -2,7 +2,6 @@
 
 import { useActionState } from "react";
 import { addBook } from "@/lib/actions";
-import axios from "axios";
 
 export default function CreateBookPage() {
   const [state, formAction, isPending] = useActionState(addBook, {

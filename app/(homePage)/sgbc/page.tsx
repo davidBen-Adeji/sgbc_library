@@ -11,7 +11,7 @@ export default async function sgbcPage({
   searchParams: { page: string };
 }) {
   const { page } = await searchParams;
-  const currentPage = page || 1;
+  const currentPage = page || "1";
   const { data } = await axios.get(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/books/sgbc?page=${currentPage}`,
   );

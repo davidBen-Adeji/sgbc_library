@@ -19,7 +19,7 @@ export default async function BookDetailsPage({
   const book: Book = bookSchema.parse(data);
 
   return (
-    <main className="w-minus-50 mx-auto pb-8">
+    <main className="w-minus-50 max-w-5xl mx-auto pb-8">
       <BookDetails book={book} />
       <Suspense fallback={<BooksSkeleton />}>
         <BookSuggestions

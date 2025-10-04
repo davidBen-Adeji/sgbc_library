@@ -19,7 +19,9 @@ export default async function BookSuggestions({
   const books: Book[] = booksSchema.parse(data);
   return (
     <article className="mt-12">
-      <h1 className="text-xl font-bold">{caption}</h1>
+      <h1 className="text-xl font-bold mx-auto w-minus-50 max-w-5xl">
+        {caption}
+      </h1>
       {books.length === 0 ? (
         <p className="text-gray-500 mt-4">No other books available</p>
       ) : (

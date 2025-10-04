@@ -17,7 +17,7 @@ export default function MobileHeader() {
   }
   return (
     <>
-      <header className={clsx("w-minus-30 mx-auto mt-6")}>
+      <header className={clsx("w-minus-50 max-w-5xl mx-auto mt-6")}>
         <div className={clsx("flex justify-between")}>
           <SiteLogo />
           <div className={clsx("flex gap-4 mt-6")}>

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { FilterQuery } from "mongoose";
 import { connectDB } from "@/lib/mongodb";
-import { Book } from "@/models/book.model";
+import { BookModel } from "@/models/book.model";
 import { handleError } from "@/lib/handleError";
 
 export async function GET(
@@ -41,7 +41,7 @@ export async function GET(
       filter.bookCollection = { $in: collectionFilter }; // e.g., ["gts", "sgbc"]
     }
 
-    let data = Book.find(filter);
+    let data = BookModel.find(filter);
 
     if (limit && limit === "3") {
       data = data.limit(3);

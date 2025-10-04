@@ -81,5 +81,5 @@ bookSchema.index({ author: 1 });
 
 export type BookType = InferSchemaType<typeof bookSchema>;
 
-export const Book: Model<BookType> =
+export const BookModel: Model<BookType> =
   models.Book || model<BookType>("Book", bookSchema);

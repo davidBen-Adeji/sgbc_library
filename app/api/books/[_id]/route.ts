@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import mongoose from "mongoose";
 import { connectDB } from "@/lib/mongodb";
-import { Book } from "@/models/book.model";
+import { BookModel } from "@/models/book.model";
 import { bookSchema } from "@/lib/validations/book";
 import { handleError } from "@/lib/handleError";
 
@@ -22,7 +22,7 @@ export async function GET(req: NextRequest, { params }: Params) {
       );
     }
 
-    const book = await Book.findById(_id);
+    const book = await BookModel.findById(_id);
 
     if (!book) {
       return NextResponse.json({ error: "Book not found" }, { status: 404 });
@@ -49,7 +49,7 @@ export async function PUT(request: NextRequest, { params }: Params) {
       );
     }
 
-    const updatedBook = await Book.findByIdAndUpdate(_id, parsed.data, {
+    const updatedBook = await BookModel.findByIdAndUpdate(_id, parsed.data, {
       new: true,
     });
 
@@ -67,7 +67,7 @@ export async function DELETE(request: NextRequest, { params }: Params) {
   try {
     await connectDB();
     const { _id } = await params;
-    const deletedBook = await Book.findByIdAndDelete(_id);
+    const deletedBook = await BookModel.findByIdAndDelete(_id);
 
     if (!deletedBook) {
       return NextResponse.json({ error: "Book not found" }, { status: 404 });

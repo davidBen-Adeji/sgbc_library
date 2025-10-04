@@ -1,24 +1,33 @@
 import { NextResponse, NextRequest } from "next/server";
 import { connectDB } from "@/lib/mongodb";
-import { Book } from "@/models/book.model";
+import { BookModel } from "@/models/book.model";
 import { bookSchema } from "@/lib/validations/book";
 import { handleError } from "@/lib/handleError";
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
     await connectDB();
-    const books = await Book.find();
+    const { searchParams } = new URL(req.url);
+    const page = parseInt(searchParams.get("page") || "1", 10);
+    const limit = 21;
 
-    return NextResponse.json(books, { status: 200 });
+    const skip = (page - 1) * limit;
+
+    const books = await BookModel.find().skip(skip).limit(limit);
+
+    const totalBooks = await BookModel.countDocuments({});
+    const totalPages = Math.ceil(totalBooks / limit);
+
+    return NextResponse.json({ books, totalPages }, { status: 200 });
   } catch (error) {
     return handleError("Failed to fetch books", error);
   }
 }
 
-export async function POST(request: NextRequest) {
+export async function POST(req: NextRequest) {
   try {
     await connectDB();
-    const body = await request.json();
+    const body = await req.json();
     const parsed = bookSchema.safeParse(body);
 
     if (!parsed.success) {
@@ -28,7 +37,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const newBook = await Book.create(parsed.data);
+    const newBook = await BookModel.create(parsed.data);
     return NextResponse.json(newBook, { status: 201 });
   } catch (error) {
     return handleError("Failed to create book", error);

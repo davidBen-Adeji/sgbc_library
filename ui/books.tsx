@@ -4,7 +4,7 @@ import { Book } from "@/lib/types";
 
 export default function Books({ books }: { books: Book[] }) {
   return (
-    <ul className="mx-auto my-10 w-minus-50 max-w-5xl flex gap-10 flex-wrap justify-center">
+    <ul className="mx-auto my-10 w-minus-50 max-w-5xl flex gap-10 flex-wrap justify-center sm:justify-around">
       {books.map((book) => {
         let { title, author } = book;
 
@@ -17,7 +17,7 @@ export default function Books({ books }: { books: Book[] }) {
         }
 
         return (
-          <Link key={book._id} href={`/${book._id}`}>
+          <Link key={book._id} href={`/${book._id}`} className="block">
             <li>
               <Image
                 src={"/bookimage.png"}

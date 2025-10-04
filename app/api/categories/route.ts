@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongodb";
-import { Book } from "@/models/book.model";
+import { BookModel } from "@/models/book.model";
 import { handleError } from "@/lib/handleError";
 
 export async function GET() {
@@ -8,7 +8,7 @@ export async function GET() {
     await connectDB();
 
     // Fetch unique category names
-    const categories = await Book.distinct("category");
+    const categories = await BookModel.distinct("category");
 
     if (categories.length === 0) {
       return NextResponse.json(

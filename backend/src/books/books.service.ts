@@ -1,19 +1,283 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  InternalServerErrorException,
+  BadRequestException,
+} from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model, Types } from 'mongoose';
+import { Book } from './schemas/book.schema';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
 
 @Injectable()
 export class BooksService {
+  //limit: maximum number of books to send per request
+  private readonly limit = 25;
+
+  constructor(@InjectModel(Book.name) private bookModel: Model<Book>) {}
+
   create(createBookDto: CreateBookDto) {
     return 'This action adds a new book';
   }
 
-  findAll() {
-    return `This action returns all books`;
+  async findAllBooks(page: number) {
+    if (page < 1) {
+      throw new BadRequestException('Page number must be 1 or greater');
+    }
+    const skip = (page - 1) * this.limit;
+
+    try {
+      const books = await this.bookModel
+        .find()
+        .skip(skip)
+        .limit(this.limit)
+        .sort({ createdAt: -1 });
+
+      const totalBooks = await this.bookModel.countDocuments();
+      const totalPages = Math.ceil(totalBooks / this.limit);
+
+      return { books, totalPages };
+    } catch (err) {
+      console.error('Error fetching books:', err);
+      throw new InternalServerErrorException('Failed to fetch books');
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} book`;
+  async findSgbcBooks(page: number) {
+    if (page < 1) {
+      throw new BadRequestException('Page number must be 1 or greater');
+    }
+    const skip = (page - 1) * this.limit;
+
+    try {
+      const books = await this.bookModel
+        .find({ bookCollection: 'SGBC' })
+        .skip(skip)
+        .limit(this.limit)
+        .sort({ createdAt: -1 });
+
+      const totalBooks = await this.bookModel.countDocuments({
+        bookCollection: 'SGBC',
+      });
+      const totalPages = Math.ceil(totalBooks / this.limit);
+
+      return { books, totalPages };
+    } catch (err) {
+      console.error('Error fetching books:', err);
+      throw new InternalServerErrorException('Failed to fetch books');
+    }
+  }
+
+  async findGtsBooks(page: number) {
+    if (page < 1) {
+      throw new BadRequestException('Page number must be 1 or greater');
+    }
+    const skip = (page - 1) * this.limit;
+
+    try {
+      const books = await this.bookModel
+        .find({ bookCollection: 'GTS' })
+        .skip(skip)
+        .limit(this.limit)
+        .sort({ createdAt: -1 });
+
+      const totalBooks = await this.bookModel.countDocuments({
+        bookCollection: 'GTS',
+      });
+      const totalPages = Math.ceil(totalBooks / this.limit);
+
+      return { books, totalPages };
+    } catch (err) {
+      console.error('Error fetching books:', err);
+      throw new InternalServerErrorException('Failed to fetch books');
+    }
+  }
+
+  async findMostBorrowed(page: number) {
+    if (page < 1) {
+      throw new BadRequestException('Page number must be 1 or greater');
+    }
+    const skip = (page - 1) * this.limit;
+
+    try {
+      const books = await this.bookModel
+        .find()
+        .skip(skip)
+        .limit(this.limit)
+        .sort({ borrowTimes: -1 });
+
+      const totalBooks = await this.bookModel.countDocuments();
+      const totalPages = Math.ceil(totalBooks / this.limit);
+
+      return { books, totalPages };
+    } catch (err) {
+      console.error('Error fetching books:', err);
+      throw new InternalServerErrorException('Failed to fetch books');
+    }
+  }
+
+  async findOneBook(id: string) {
+    if (!Types.ObjectId.isValid(id)) {
+      throw new NotFoundException(`${id} is not a valid id`);
+    }
+
+    try {
+      const book = await this.bookModel.findById(id).exec();
+      if (!book) {
+        throw new NotFoundException(`Book with id ${id} not found`);
+      }
+      return book;
+    } catch (err) {
+      console.error('Error fetching book:', err);
+      throw new InternalServerErrorException('Failed to fetch book');
+    }
+  }
+
+  async searchBooks(query: string, page: number) {
+    if (!query) {
+      throw new BadRequestException('Search query is required');
+    }
+    if (page < 1) {
+      throw new BadRequestException('Page number must be 1 or greater');
+    }
+
+    const skip = (page - 1) * this.limit;
+
+    const regex = new RegExp(query, 'i'); // case-insensitive
+
+    try {
+      const books = await this.bookModel
+        .find({
+          $or: [
+            { title: { $regex: regex } },
+            { author: { $regex: regex } },
+            { ISBN: { $regex: regex } },
+          ],
+        })
+        .skip(skip)
+        .limit(this.limit);
+
+      const totalBooks = await this.bookModel.countDocuments({
+        $or: [
+          { title: { $regex: regex } },
+          { author: { $regex: regex } },
+          { ISBN: { $regex: regex } },
+        ],
+      });
+      const totalPages = Math.ceil(totalBooks / this.limit);
+
+      return { books, totalPages };
+    } catch (err) {
+      console.error('Error fetching books:', err);
+      throw new InternalServerErrorException('Failed to fetch books');
+    }
+  }
+
+  async quickBookSearch(query: string) {
+    if (!query) {
+      throw new BadRequestException('Search query is required');
+    }
+
+    const regex = new RegExp(query, 'i'); // case-insensitive
+
+    try {
+      const books = await this.bookModel
+        .find({
+          $or: [
+            { title: { $regex: regex } },
+            { author: { $regex: regex } },
+            { ISBN: { $regex: regex } },
+          ],
+        })
+        .limit(10);
+
+      return books;
+    } catch (err) {
+      console.error('Error fetching books:', err);
+      throw new InternalServerErrorException('Failed to fetch books');
+    }
+  }
+
+  async findByCategory(category: string, page: number) {
+    if (!category) {
+      throw new BadRequestException('Category is required');
+    }
+    if (page < 1) {
+      throw new BadRequestException('Page number must be 1 or greater');
+    }
+
+    const skip = (page - 1) * this.limit;
+
+    const regex = new RegExp(category, 'i'); // case-insensitive
+
+    try {
+      const books = await this.bookModel
+        .find({ category: { $regex: regex } })
+        .skip(skip)
+        .limit(this.limit)
+        .sort({ createdAt: -1 });
+
+      if (!books || books.length === 0) {
+        throw new NotFoundException(`No books found in category; ${category}`);
+      }
+
+      const totalBooks = await this.bookModel.countDocuments({
+        category: { $regex: regex },
+      });
+      const totalPages = Math.ceil(totalBooks / this.limit);
+
+      return { books, totalPages };
+    } catch (err) {
+      console.error('Error fetching books:', err);
+      throw new InternalServerErrorException('Failed to fetch books');
+    }
+  }
+
+  async findAllAuthors() {
+    try {
+      const authors = await this.bookModel.distinct('author');
+
+      return authors;
+    } catch (err) {
+      console.error('Error fetching authors', err);
+      throw new InternalServerErrorException('Failed to fetch authors');
+    }
+  }
+
+  async findByAuthor(author: string, page: number) {
+    if (!author) {
+      throw new BadRequestException('Author is required');
+    }
+    if (page < 1) {
+      throw new BadRequestException('Page number must be 1 or greater');
+    }
+
+    const skip = (page - 1) * this.limit;
+
+    const regex = new RegExp(author, 'i'); // case-insensitive
+
+    try {
+      const books = await this.bookModel
+        .find({ author: { $regex: regex } })
+        .skip(skip)
+        .limit(this.limit)
+        .sort({ createdAt: -1 });
+
+      if (!books || books.length === 0) {
+        throw new NotFoundException(`No books found authored by ${author}`);
+      }
+
+      const totalBooks = await this.bookModel.countDocuments({
+        author: { $regex: regex },
+      });
+      const totalPages = Math.ceil(totalBooks / this.limit);
+
+      return { books, totalPages };
+    } catch (err) {
+      console.error('Error fetching books:', err);
+      throw new InternalServerErrorException('Failed to fetch books');
+    }
   }
 
   update(id: number, updateBookDto: UpdateBookDto) {

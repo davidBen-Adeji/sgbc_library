@@ -17,8 +17,19 @@ export class BooksService {
 
   constructor(@InjectModel(Book.name) private bookModel: Model<Book>) {}
 
-  create(createBookDto: CreateBookDto) {
-    return 'This action adds a new book';
+  async createBook(dto: CreateBookDto) {
+    try {
+      await this.bookModel.create(dto);
+
+      return {
+        success: true,
+        code: 201,
+        message: 'Book created successfully',
+      };
+    } catch (err) {
+      console.error('Error creating book:', err);
+      throw new InternalServerErrorException('Failed to create book');
+    }
   }
 
   async findAllBooks(page: number) {
@@ -199,7 +210,7 @@ export class BooksService {
     }
   }
 
-  async findByCategory(category: string, page: number) {
+  async findByCategory(category: string, page: number, limit: string) {
     if (!category) {
       throw new BadRequestException('Category is required');
     }
@@ -212,6 +223,13 @@ export class BooksService {
     const regex = new RegExp(category, 'i'); // case-insensitive
 
     try {
+      if (limit && limit === '5') {
+        return this.bookModel.aggregate([
+          { $match: { category: { $regex: regex } } },
+          { $sample: { size: 5 } },
+        ]);
+      }
+
       const books = await this.bookModel
         .find({ category: { $regex: regex } })
         .skip(skip)
@@ -245,7 +263,7 @@ export class BooksService {
     }
   }
 
-  async findByAuthor(author: string, page: number) {
+  async findByAuthor(author: string, page: number, limit: string) {
     if (!author) {
       throw new BadRequestException('Author is required');
     }
@@ -258,6 +276,13 @@ export class BooksService {
     const regex = new RegExp(author, 'i'); // case-insensitive
 
     try {
+      if (limit && limit === '5') {
+        return this.bookModel.aggregate([
+          { $match: { author: { $regex: regex } } },
+          { $sample: { size: 5 } },
+        ]);
+      }
+
       const books = await this.bookModel
         .find({ author: { $regex: regex } })
         .skip(skip)
@@ -280,11 +305,53 @@ export class BooksService {
     }
   }
 
-  update(id: number, updateBookDto: UpdateBookDto) {
-    return `This action updates a #${id} book`;
+  async updateBook(id: string, updateBookDto: UpdateBookDto) {
+    if (!Types.ObjectId.isValid(id)) {
+      throw new NotFoundException(`${id} is not a valid id`);
+    }
+
+    try {
+      const updatedBook = await this.bookModel.findByIdAndUpdate(
+        id,
+        { $set: updateBookDto },
+        { new: true },
+      );
+
+      if (!updatedBook) {
+        throw new NotFoundException(`Book with ID ${id} not found`);
+      }
+
+      return {
+        success: true,
+        code: 200,
+        message: 'Book updated successfully',
+      };
+    } catch (err) {
+      console.error('Error updating book:', err);
+      throw new InternalServerErrorException('Failed to update book');
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} book`;
+  async deleteBook(id: string) {
+    if (!Types.ObjectId.isValid(id)) {
+      throw new NotFoundException(`${id} is not a valid id`);
+    }
+
+    try {
+      const deletedBook = await this.bookModel.findByIdAndDelete(id);
+
+      if (!deletedBook) {
+        throw new NotFoundException(`Book with ID ${id} not found`);
+      }
+
+      return {
+        success: true,
+        code: 200,
+        message: 'Book deleted successfully',
+      };
+    } catch (err) {
+      console.error('Error deleting books:', err);
+      throw new InternalServerErrorException('Failed to delete book');
+    }
   }
 }

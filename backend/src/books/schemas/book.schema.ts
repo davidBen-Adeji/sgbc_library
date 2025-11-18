@@ -52,6 +52,7 @@ export class Book extends Document {
     type: Number,
     default: 0,
     min: [0, 'Borrow times cannot be negative'],
+    required: true,
   })
   borrowTimes: number;
 
@@ -78,7 +79,6 @@ export class Book extends Document {
 
   @Prop({
     type: String,
-    required: [true, 'Publisher is required'],
     trim: true,
   })
   publisher: string;

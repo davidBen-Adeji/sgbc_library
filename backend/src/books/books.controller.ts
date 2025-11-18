@@ -19,8 +19,8 @@ export class BooksController {
   constructor(private readonly booksService: BooksService) {}
 
   @Post()
-  create(@Body() createBookDto: CreateBookDto) {
-    return this.booksService.create(createBookDto);
+  createBook(@Body() createBookDto: CreateBookDto) {
+    return this.booksService.createBook(createBookDto);
   }
 
   @Get()
@@ -68,8 +68,9 @@ export class BooksController {
   findByCategory(
     @Param('category') category: string,
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
+    @Query('limit') limit: string,
   ) {
-    return this.booksService.findByCategory(category, page);
+    return this.booksService.findByCategory(category, page, limit);
   }
 
   @Get('authors')
@@ -81,8 +82,9 @@ export class BooksController {
   findByAuthor(
     @Param('author') author: string,
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
+    @Query('limit') limit: string,
   ) {
-    return this.booksService.findByAuthor(author, page);
+    return this.booksService.findByAuthor(author, page, limit);
   }
 
   @Get(':id')
@@ -91,12 +93,12 @@ export class BooksController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateBookDto: UpdateBookDto) {
-    return this.booksService.update(+id, updateBookDto);
+  updateBook(@Param('id') id: string, @Body() updateBookDto: UpdateBookDto) {
+    return this.booksService.updateBook(id, updateBookDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.booksService.remove(+id);
+  deleteBook(@Param('id') id: string) {
+    return this.booksService.deleteBook(id);
   }
 }

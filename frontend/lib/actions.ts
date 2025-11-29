@@ -19,6 +19,7 @@ export async function fetchBooks(
     return { totalPages, books };
   } catch (err) {
     console.error("An error occured", err);
+    throw err;
   }
 }
 
@@ -30,5 +31,6 @@ export async function fetchBook(id: string): Promise<Book> {
     return book;
   } catch (err) {
     console.error("An error occured", err);
+    throw err;
   }
 }

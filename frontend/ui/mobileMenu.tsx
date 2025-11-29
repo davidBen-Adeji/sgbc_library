@@ -87,9 +87,13 @@ export default function MobileSearch({
               <li
                 key={category}
                 className="hover:bg-gray-400 focus:bg-gray-400 cursor-pointer p-2"
-                onClick={handleToggleMenu}
               >
-                <Link href={`/categories/${category}`}>{category}</Link>
+                <Link
+                  onClick={handleToggleMenu}
+                  href={`/categories/${category}`}
+                >
+                  {category}
+                </Link>
               </li>
             ))}
           </ul>

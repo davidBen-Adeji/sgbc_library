@@ -15,7 +15,10 @@ export default async function Page({ searchParams }: Props) {
     currentPage = 1;
   }
 
-  const data = await fetchBooks(`page=${currentPage}`, "sgbc");
+  const data: { totalPages: number; books: Book[] } = await fetchBooks(
+    `page=${currentPage}`,
+    "sgbc",
+  );
   const totalPages = data.totalPages;
   const books: Book[] = data.books;
 

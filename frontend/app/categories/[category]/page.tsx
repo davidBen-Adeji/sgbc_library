@@ -21,7 +21,7 @@ export default async function Page({ params, searchParams }: Props) {
     currentPage = 1;
   }
 
-  const data = await fetchBooks(
+  const data: { totalPages: number; books: Book[] } = await fetchBooks(
     `page=${currentPage}`,
     `categories/${category}`,
   );

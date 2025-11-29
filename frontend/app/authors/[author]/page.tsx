@@ -22,7 +22,10 @@ export default async function Page({ params, searchParams }: Props) {
     currentPage = 1;
   }
 
-  const data = await fetchBooks(`page=${currentPage}`, `authors/${author}`);
+  const data: { totalPages: number; books: Book[] } = await fetchBooks(
+    `page=${currentPage}`,
+    `authors/${author}`,
+  );
 
   const totalPages = data.totalPages;
   const books: Book[] = data.books;

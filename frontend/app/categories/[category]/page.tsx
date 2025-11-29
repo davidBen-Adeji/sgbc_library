@@ -1,6 +1,7 @@
 import Books from "@/ui/books";
 import Pagination from "@/ui/pagination";
 import { fetchBooks } from "@/lib/actions";
+import { Book } from "@/lib/types";
 
 interface Props {
   params: {
@@ -20,10 +21,12 @@ export default async function Page({ params, searchParams }: Props) {
     currentPage = 1;
   }
 
-  const { books, totalPages } = await fetchBooks(
+  const data = await fetchBooks(
     `page=${currentPage}`,
     `categories/${category}`,
   );
+  const totalPages = data.totalPages;
+  const books: Book[] = data.books;
 
   return (
     <>

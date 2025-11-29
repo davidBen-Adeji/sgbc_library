@@ -3,6 +3,7 @@ import BooksSkeleton from "@/ui/booksSkeleton";
 import { Suspense } from "react";
 import BookSuggestions from "@/ui/bookSuggestions";
 import { fetchBook } from "@/lib/actions";
+import { Book } from "@/lib/types";
 
 interface Props {
   params: {
@@ -13,7 +14,7 @@ interface Props {
 export default async function BookDetailsPage({ params }: Props) {
   const { id } = await params;
 
-  const book = await fetchBook(id);
+  const book: Book = await fetchBook(id);
 
   return (
     <main className="pb-8">

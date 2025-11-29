@@ -18,4 +18,6 @@ export const bookSchema = z.object({
   price: z.coerce.number().min(1, "price must be at least 1"),
 });
 
+export const authorsSchema = z.array(z.string());
+
 export const booksSchema = z.array(bookSchema);

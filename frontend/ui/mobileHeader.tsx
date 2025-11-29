@@ -5,10 +5,16 @@ import Image from "next/image";
 import { useState } from "react";
 
 import MobileSearch from "@/ui/mobileSearch";
+import MobileMenu from "@/ui/mobileMenu";
 import SiteLogo from "@/ui/siteLogo";
 
 export default function MobileHeader() {
   const [isSearchVisible, setIsSearchVisible] = useState(false);
+  const [isMenuVisible, setIsMenuVisible] = useState(false);
+
+  function handleToggleMenu(boolVal: boolean) {
+    setIsMenuVisible(boolVal);
+  }
 
   function handleToggleSearch(boolVal: boolean) {
     setIsSearchVisible(boolVal);
@@ -35,10 +41,12 @@ export default function MobileHeader() {
               src="/menu.svg"
               width={30}
               height={30}
+              onClick={() => handleToggleMenu(true)}
             />
           </div>
         </div>
       </header>
+      <MobileMenu onToggleMenu={handleToggleMenu} isVisible={isMenuVisible} />
       <MobileSearch
         onToggleSearch={handleToggleSearch}
         isVisible={isSearchVisible}

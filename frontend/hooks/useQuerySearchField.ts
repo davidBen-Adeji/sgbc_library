@@ -21,14 +21,7 @@ export default function useQuerySearchField(debouncedSearch: string) {
           const books = booksSchema.parse(data);
           setResults(books);
         } catch (error) {
-          if (axios.isAxiosError(error)) {
-            console.error(
-              "Axios error:",
-              error.response?.data || error.message,
-            );
-          } else {
-            console.error("Failed to fetch books", error);
-          }
+          console.error("An error occured: ", error);
         } finally {
           setIsLoading(false);
         }

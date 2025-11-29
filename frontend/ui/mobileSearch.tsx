@@ -32,27 +32,34 @@ export default function MobileSearch({
 
     const searchTerm = search.trim();
 
+    setSearch("");
+
     onToggleSearch(false);
 
     router.push(`/search?query=${encodeURIComponent(searchTerm)}`);
   }
 
+  function handleCloseSearch() {
+    setSearch("");
+    onToggleSearch(false);
+  }
+
   return (
     <article
       className={clsx(
-        "w-screen h-screen fixed top-0 z-50 bg-white transition-all duration-300 overflow-y-scroll",
+        "fixed left-0 right-0 bottom-0 top-0 z-50 bg-white transition-all duration-300 overflow-y-scroll",
         isVisible ? "left-0" : "left-[100%]",
       )}
     >
       {/* Close button + search bar */}
-      <div className="w-container flex items-start gap-6 w-minus-30 mx-auto mt-6">
+      <div className="w-container flex items-start gap-6 mx-auto pt-6">
         <Image
           src="/close.svg"
           alt="close button"
           width={25}
           height={25}
           className="mt-2 cursor-pointer"
-          onClick={() => onToggleSearch(false)}
+          onClick={handleCloseSearch}
         />
         <div className="flex-grow">
           <form onSubmit={handleSubmit}>

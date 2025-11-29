@@ -64,7 +64,7 @@ export class BooksController {
     return this.booksService.quickBookSearch(query);
   }
 
-  @Get('category/:category')
+  @Get('categories/:category')
   findByCategory(
     @Param('category') category: string,
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
@@ -78,7 +78,7 @@ export class BooksController {
     return this.booksService.findAllAuthors();
   }
 
-  @Get('author/:author')
+  @Get('authors/:author')
   findByAuthor(
     @Param('author') author: string,
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,

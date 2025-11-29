@@ -13,7 +13,7 @@ import { UpdateBookDto } from './dto/update-book.dto';
 @Injectable()
 export class BooksService {
   //limit: maximum number of books to send per request
-  private readonly limit = 25;
+  private readonly limit = 28;
 
   constructor(@InjectModel(Book.name) private bookModel: Model<Book>) {}
 
@@ -220,13 +220,16 @@ export class BooksService {
 
     const skip = (page - 1) * this.limit;
 
-    const regex = new RegExp(category, 'i'); // case-insensitive
+    function escapeRegex(str: string) {
+      return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+    const regex = new RegExp(escapeRegex(category), 'i'); // case-insensitive
 
     try {
-      if (limit && limit === '5') {
+      if (limit && limit === '4') {
         return this.bookModel.aggregate([
           { $match: { category: { $regex: regex } } },
-          { $sample: { size: 5 } },
+          { $sample: { size: 4 } },
         ]);
       }
 
@@ -276,10 +279,10 @@ export class BooksService {
     const regex = new RegExp(author, 'i'); // case-insensitive
 
     try {
-      if (limit && limit === '5') {
+      if (limit && limit === '4') {
         return this.bookModel.aggregate([
           { $match: { author: { $regex: regex } } },
-          { $sample: { size: 5 } },
+          { $sample: { size: 4 } },
         ]);
       }
 

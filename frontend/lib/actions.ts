@@ -5,7 +5,10 @@ import { booksSchema, bookSchema } from "@/lib/validations/book";
 import { serverBaseURI } from "@/lib/baseURI";
 import { Book } from "@/lib/types";
 
-export async function fetchBooks(params: string, route: string = "") {
+export async function fetchBooks(
+  params: string,
+  route: string = "",
+): Promise<{ totalPages: number; books: Book[] }> {
   try {
     const { data } = await axios.get(
       `${serverBaseURI}/books/${route}?${params}`,

@@ -22,7 +22,7 @@ export async function fetchBooks(
   }
 }
 
-export async function fetchBook(id: string) {
+export async function fetchBook(id: string): Promise<Book> {
   try {
     const { data } = await axios.get(`${serverBaseURI}/books/${id}`);
     const book: Book = bookSchema.parse(data);

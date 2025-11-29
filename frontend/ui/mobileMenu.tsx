@@ -11,7 +11,7 @@ interface MobileMenuProps {
   onToggleMenu: (value: boolean) => void;
 }
 
-const categories = [
+const categories: string[] = [
   "New Testament Commentary",
   "Old Testament Commentary",
   "References (Dictionaries, Concordance e.t.c)",

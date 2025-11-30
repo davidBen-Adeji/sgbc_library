@@ -26,7 +26,10 @@ export default function DesktopHeader() {
   // Close when clicking outside
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
-      if (categoriesRef.current && !categoriesRef.current.contains(e.target)) {
+      const target = e.target;
+      if (!(target instanceof Node)) return;
+
+      if (categoriesRef.current && !categoriesRef.current.contains(target)) {
         setIsDropDownVisible(false);
       }
     }

@@ -16,7 +16,7 @@ export default function SearchResult({
     <Link
       key={result._id}
       href={`/${result._id}`}
-      onClick={() => onToggleSearch(false)}
+      onClick={() => onToggleSearch && onToggleSearch(false)}
       className="block mt-4 cursor-pointer p-2 hover:bg-gray-200/50 focus:bg-gray-200/50"
     >
       <li className="space-y-1">

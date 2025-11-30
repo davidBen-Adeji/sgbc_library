@@ -5,7 +5,7 @@ import { Book } from "@/lib/types";
 
 interface SearchResultProps {
   result: Book;
-  onToggleSearch: (value: boolean) => void;
+  onToggleSearch?: (value: boolean) => void;
 }
 
 export default function SearchResult({

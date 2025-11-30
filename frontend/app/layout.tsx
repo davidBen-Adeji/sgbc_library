@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 import MobileHeader from "@/ui/mobileHeader";
+import DesktopHeader from "@/ui/desktopHeader";
 
 export const metadata: Metadata = {
   title: "SGBC Library",
@@ -18,6 +19,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <MobileHeader />
+        <DesktopHeader />
         {children}
       </body>
     </html>

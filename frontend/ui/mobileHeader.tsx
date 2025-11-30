@@ -22,7 +22,7 @@ export default function MobileHeader() {
 
   return (
     <>
-      <header className="w-container max-w-5xl mx-auto pt-6">
+      <header className="w-container max-w-5xl mx-auto pt-6 sm:hidden">
         <div className="flex justify-between">
           <SiteLogo />
           {/* search button + menu button */}

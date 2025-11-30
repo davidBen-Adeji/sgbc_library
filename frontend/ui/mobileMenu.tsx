@@ -5,23 +5,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { categories } from "@/lib/categories";
 
 interface MobileMenuProps {
   isVisible: boolean;
   onToggleMenu: (value: boolean) => void;
 }
-
-const categories: string[] = [
-  "New Testament Commentary",
-  "Old Testament Commentary",
-  "References (Dictionaries, Concordance e.t.c)",
-  "Biblical Counselling",
-  "History & Biography",
-  "Apologetics",
-  "The Christian Life",
-  "Selected Works",
-  "Church Doctrine & Theology",
-];
 
 export default function MobileSearch({
   isVisible,
@@ -41,7 +30,7 @@ export default function MobileSearch({
   return (
     <article
       className={clsx(
-        "fixed left-0 right-0 bottom-0 top-0 z-50 bg-white transition-all duration-300 overflow-y-scroll px-6 py-2",
+        "fixed left-0 top-0 w-screen h-screen  z-50 bg-white transition-all duration-300 overflow-y-scroll px-6 py-2",
         isVisible ? "left-0" : "left-[100%]",
       )}
     >
@@ -54,20 +43,18 @@ export default function MobileSearch({
         onClick={handleToggleMenu}
       />
       <menu className="text-lg mt-20 space-y-4">
-        <li
-          onClick={handleToggleMenu}
-          className={clsx(pathName === "/" && "font-bold")}
-        >
-          <Link href="/">Home</Link>
+        <li className={clsx(pathName === "/" && "font-bold")}>
+          <Link onClick={handleToggleMenu} href="/">
+            Home
+          </Link>
         </li>
-        <li
-          onClick={handleToggleMenu}
-          className={clsx(pathName === "/authors" && "font-bold")}
-        >
-          <Link href="/authors">Authors</Link>
+        <li className={clsx(pathName === "/authors" && "font-bold")}>
+          <Link onClick={handleToggleMenu} href="/authors">
+            Authors
+          </Link>
         </li>
         <li>
-          <span onClick={handleToggleDropdown}>
+          <span className="cursor-pointer" onClick={handleToggleDropdown}>
             Categories
             <Image
               src="/chevrondown.svg"

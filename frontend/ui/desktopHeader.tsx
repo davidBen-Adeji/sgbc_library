@@ -18,7 +18,7 @@ export default function DesktopHeader() {
   const [isSearchResultsVisible, setIsSearchResultsVisible] = useState(false);
   const [search, setSearch] = useState("");
   const pathName = usePathname();
-  const categoriesRef = useRef(null);
+  const categoriesRef = useRef<HTMLLIElement>(null);
   const debouncedSearch = useDebounce(search, 1000);
   const router = useRouter();
   const { isLoading, results } = useQuerySearchField(debouncedSearch);

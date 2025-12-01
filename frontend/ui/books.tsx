@@ -34,9 +34,9 @@ export default function Books({ books }: { books: Book[] }) {
               <div className="mt-2">
                 <p className="font-semibold">{title}</p>
                 <p className="text-sm text-gray-500">{author}</p>
-                <p className="text-sm text-gray-500">
-                  ${(book.price / 100).toFixed(2)}
-                </p>
+                {/* <p className="text-sm text-gray-500"> */}
+                {/*   ${(book.price / 100).toFixed(2)} */}
+                {/* </p> */}
               </div>
             </Link>
           </li>

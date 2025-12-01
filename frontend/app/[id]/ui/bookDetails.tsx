@@ -18,7 +18,7 @@ export default function BookDetails({ book }: { book: Book }) {
         <p className="font-semibold">Publisher: {book.publisher}</p>
         <p className="font-semibold">Category: {book.category}</p>
         <p className="font-semibold">Collection: {book.bookCollection}</p>
-        <p className="font-semibold">Price: ${(book.price / 100).toFixed(2)}</p>
+        {/* <p className="font-semibold">Price: ${(book.price / 100).toFixed(2)}</p> */}
         <p className="text-gray-500">{book.description}</p>
       </section>
     </article>

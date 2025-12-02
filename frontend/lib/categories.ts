@@ -1,4 +1,4 @@
-export const categories: string[] = [
+export const categories = [
   "New Testament Commentary",
   "Old Testament Commentary",
   "References (Dictionaries, Concordance e.t.c)",

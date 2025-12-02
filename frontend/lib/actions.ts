@@ -11,8 +11,8 @@ export async function fetchBooks(
     const { data } = await axios.get(
       `${serverBaseURI}/books/${route}?${params}`,
     );
-    const totalPages: number = data.totalPages;
-    const books: Book[] = booksSchema.parse(data.books);
+    const totalPages = data.totalPages;
+    const books = booksSchema.parse(data.books);
 
     return { totalPages, books };
   } catch (err) {
@@ -24,7 +24,7 @@ export async function fetchBooks(
 export async function fetchBook(id: string): Promise<Book> {
   try {
     const { data } = await axios.get(`${serverBaseURI}/books/${id}`);
-    const book: Book = bookSchema.parse(data);
+    const book = bookSchema.parse(data);
 
     return book;
   } catch (err) {

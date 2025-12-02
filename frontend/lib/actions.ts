@@ -1,5 +1,3 @@
-"use server";
-
 import axios from "axios";
 import { booksSchema, bookSchema } from "@/lib/validations/book";
 import { serverBaseURI } from "@/lib/baseURI";

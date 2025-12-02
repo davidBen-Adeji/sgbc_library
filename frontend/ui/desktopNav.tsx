@@ -9,10 +9,10 @@ import { categories } from "@/lib/categories";
 export default function DesktopNav() {
   const [isDropdownVisible, setIsDropDownVisible] = useState(false);
   const pathName = usePathname();
-  const categoriesRef = useRef<HTMLLIElement>(null);
+  const ref = useRef<HTMLLIElement>(null);
 
   // Close when clicking outside
-  useClickOutside(categoriesRef, () => {
+  useClickOutside(ref, () => {
     setIsDropDownVisible(false);
   });
 
@@ -26,7 +26,7 @@ export default function DesktopNav() {
         <li className={clsx(pathName === "/authors" && "font-bold")}>
           <Link href="/authors">Authors</Link>
         </li>
-        <li className="relative" ref={categoriesRef}>
+        <li className="relative" ref={ref}>
           <span className="cursor-pointer" onClick={handleToggleDropdown}>
             Categories
             <Image

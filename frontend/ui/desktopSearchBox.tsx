@@ -7,10 +7,10 @@ import SearchResultSkeleton from "@/ui/searchResultSkeleton";
 import SearchResult from "@/ui/searchResult";
 
 export default function DesktopSearchBox() {
-  const [isSearchResultsVisible, setIsSearchResultsVisible] = useState(false);
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 1000);
   const { isLoading, results } = useQuerySearchField(debouncedSearch);
+  const [isSearchResultsVisible, setIsSearchResultsVisible] = useState(false);
 
   const router = useRouter();
 

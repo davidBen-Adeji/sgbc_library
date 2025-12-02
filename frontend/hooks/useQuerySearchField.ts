@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { Book } from "@/lib/types";
 import { booksSchema } from "@/lib/validations/book";
 import { clientBaseURI } from "@/lib/baseURI";
 
 export default function useQuerySearchField(debouncedSearch: string) {
-  const [results, setResults] = useState([]);
+  const [results, setResults] = useState<Book[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const returnObject = { results, isLoading };

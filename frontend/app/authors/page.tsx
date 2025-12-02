@@ -7,7 +7,7 @@ import Link from "next/link";
 
 export default async function Page() {
   const { data } = await axios.get(`${serverBaseURI}/books/authors`);
-  const authors: string[] = authorsSchema.parse(data);
+  const authors = authorsSchema.parse(data);
   return (
     <main className="w-container max-w-5xl mt-12 mx-auto">
       <h1 className="text-xl font-bold">Authors</h1>

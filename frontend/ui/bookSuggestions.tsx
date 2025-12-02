@@ -3,7 +3,6 @@ import Books from "@/ui/books";
 import Link from "next/link";
 import { booksSchema } from "@/lib/validations/book";
 import { serverBaseURI } from "@/lib/baseURI";
-import { Book } from "@/lib/types";
 
 export default async function BookSuggestions({
   caption,
@@ -15,7 +14,7 @@ export default async function BookSuggestions({
   btnHref: string;
 }) {
   const { data } = await axios.get(`${serverBaseURI}/${apiRoute}`);
-  const books: Book[] = booksSchema.parse(data);
+  const books = booksSchema.parse(data);
   return (
     <article className="mt-12">
       <h1 className="text-xl font-bold w-container max-w-5xl mx-auto">

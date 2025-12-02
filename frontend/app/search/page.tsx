@@ -21,7 +21,7 @@ export default async function Page({ searchParams }: Props) {
   );
 
   return (
-    <>
+    <main>
       <h1 className="w-container mx-auto mt-12 text-xl font-bold max-w-5xl">
         Showing search results for {`"${query}"`}
       </h1>
@@ -31,6 +31,6 @@ export default async function Page({ searchParams }: Props) {
         totalPages={totalPages}
         basePath={`/search?query=${query}`}
       />
-    </>
+    </main>
   );
 }

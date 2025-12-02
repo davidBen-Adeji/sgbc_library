@@ -26,7 +26,7 @@ export default async function Page({ params, searchParams }: Props) {
   );
 
   return (
-    <>
+    <main>
       <h1 className="mt-12 text-xl w-container max-w-5xl mx-auto font-bold">
         Books based on {decodeURIComponent(category)}
       </h1>
@@ -36,6 +36,6 @@ export default async function Page({ params, searchParams }: Props) {
         totalPages={totalPages}
         basePath={`/categories/${category}?`}
       />
-    </>
+    </main>
   );
 }

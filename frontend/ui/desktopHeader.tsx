@@ -4,9 +4,10 @@ import Link from "next/link";
 import Image from "next/image";
 import clsx from "clsx";
 import { usePathname, useRouter } from "next/navigation";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import useDebounce from "@/hooks/useDebounce";
 import useQuerySearchField from "@/hooks/useQuerySearchField";
+import useClickOutside from "@/hooks/useClickOutside";
 import SearchResultSkeleton from "@/ui/searchResultSkeleton";
 import SearchResult from "@/ui/searchResult";
 import { categories } from "@/lib/categories";
@@ -24,18 +25,9 @@ export default function DesktopHeader() {
   const { isLoading, results } = useQuerySearchField(debouncedSearch);
 
   // Close when clicking outside
-  useEffect(() => {
-    function handleClickOutside(e: MouseEvent) {
-      const target = e.target;
-      if (!(target instanceof Node)) return;
-
-      if (categoriesRef.current && !categoriesRef.current.contains(target)) {
-        setIsDropDownVisible(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [categoriesRef]);
+  useClickOutside(categoriesRef, () => {
+    setIsDropDownVisible(false);
+  });
 
   function handleToggleDropdown() {
     setIsDropDownVisible((prevVal) => !prevVal);

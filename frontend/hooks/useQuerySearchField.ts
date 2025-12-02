@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Book } from "@/lib/types";
 import { booksSchema } from "@/lib/validations/book";
 import { clientBaseURI } from "@/lib/baseURI";
 
 export default function useQuerySearchField(debouncedSearch: string) {
-  const [results, setResults] = useState<Book[]>([]);
+  const [results, setResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const returnObject = { results, isLoading };
@@ -18,7 +17,7 @@ export default function useQuerySearchField(debouncedSearch: string) {
           const { data } = await axios.get(
             `${clientBaseURI}/books/quick-search?query=${encodeURIComponent(debouncedSearch)}`,
           );
-          const books: Book[] = booksSchema.parse(data);
+          const books = booksSchema.parse(data);
           setResults(books);
         } catch (error) {
           console.error("An error occured: ", error);

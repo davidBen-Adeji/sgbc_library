@@ -1,28 +1,13 @@
+"use server";
+
 import axios from "axios";
-import { booksSchema, bookSchema } from "@/lib/validations/book";
 import { serverBaseURI } from "@/lib/baseURI";
 
-export async function fetchBooks(params: string, route: string = "") {
+export async function createBook(prevState: any, formData: FormData) {
   try {
-    const { data } = await axios.get(
-      `${serverBaseURI}/books/${route}?${params}`,
-    );
-    const totalPages = data.totalPages;
-    const books = booksSchema.parse(data.books);
+    const { data } = await axios.post(`${serverBaseURI}/books`, formData);
 
-    return { totalPages, books };
-  } catch (err) {
-    console.error("An error occured", err);
-    throw err;
-  }
-}
-
-export async function fetchBook(id: string) {
-  try {
-    const { data } = await axios.get(`${serverBaseURI}/books/${id}`);
-    const book = bookSchema.parse(data);
-
-    return book;
+    return { success: true };
   } catch (err) {
     console.error("An error occured", err);
     throw err;

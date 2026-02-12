@@ -27,7 +27,7 @@ export class Book extends Document {
   @Prop({
     type: String,
     enum: {
-      values: ['SGBC Library', 'GTS'],
+      values: ['SGBC', 'GTS'],
       message: "Collection must be either 'sgbc' or 'gts'",
     },
     required: [true, 'Collection is required'],
@@ -92,6 +92,12 @@ export class Book extends Document {
     },
   })
   imageURL: string;
+
+  @Prop({
+    type: String,
+    trim: true,
+  })
+  cloudinaryId: string;
 }
 
 export const BookSchema = SchemaFactory.createForClass(Book);

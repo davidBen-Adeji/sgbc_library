@@ -6,7 +6,7 @@ export default function BookDetails({ book }: { book: Book }) {
     <article className="mt-8 max-w-2xl mx-auto md:flex justify-center items-start">
       <Image
         alt="book image"
-        src="/bookimage.png"
+        src={book.imageURL || `/bookimage.png`}
         width={310}
         height={450}
         className="mx-auto"

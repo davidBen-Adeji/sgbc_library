@@ -17,7 +17,9 @@ export class BooksService {
 
   constructor(@InjectModel(Book.name) private bookModel: Model<Book>) {}
 
-  async createBook(dto: CreateBookDto) {
+  async createBook(
+    dto: CreateBookDto & { imageURL: string; cloudinaryId: string },
+  ) {
     try {
       await this.bookModel.create(dto);
 

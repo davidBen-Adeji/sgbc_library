@@ -9,18 +9,35 @@ import {
   Query,
   ParseIntPipe,
   DefaultValuePipe,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
 import { BooksService } from './books.service';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
+// import type { Express } from 'express';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('books')
 export class BooksController {
   constructor(private readonly booksService: BooksService) {}
 
   @Post()
-  createBook(@Body() createBookDto: CreateBookDto) {
-    return this.booksService.createBook(createBookDto);
+  @UseInterceptors(FileInterceptor('image'))
+  createBook(
+    @UploadedFile() file: Express.Multer.File,
+    @Body() createBookDto: CreateBookDto,
+  ) {
+    console.log('File name: ', file);
+    // const uploadedImage = await this.cloudinaryService.uploadImage(file.path);
+    //
+    // fs.unlinkSync(file.path);
+    //
+    // return this.booksService.createBook({
+    //   ...createBookDto,
+    //   imageURL: uploadedImage.secure_url,
+    //   cloudinaryId: uploadedImage.public_id,
+    // });
   }
 
   @Get()

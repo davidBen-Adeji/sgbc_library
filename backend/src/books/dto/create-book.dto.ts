@@ -6,7 +6,7 @@ import {
   MaxLength,
   IsEnum,
   IsOptional,
-  IsUrl,
+  // IsUrl,
   IsNotEmpty,
 } from 'class-validator';
 import { Transform } from 'class-transformer';
@@ -18,6 +18,7 @@ export class CreateBookDto {
   title: string;
 
   @IsNumber()
+  @Transform(({ value }) => Number(value))
   @Min(1, { message: 'Price must be at least 1' })
   price: number;
 
@@ -26,7 +27,7 @@ export class CreateBookDto {
   @Transform(({ value }) => value.trim())
   author: string;
 
-  @IsEnum(['SGBC Library', 'GTS'], {
+  @IsEnum(['SGBC', 'GTS'], {
     message: "Collection must be either 'SGBC Library' or 'GTS'",
   })
   @Transform(({ value }) => value.trim())
@@ -46,6 +47,7 @@ export class CreateBookDto {
   description?: string;
 
   @IsInt()
+  @Transform(({ value }) => Number(value))
   @Min(0, { message: 'Borrow times cannot be negative' })
   borrowTimes: number;
 
@@ -55,10 +57,12 @@ export class CreateBookDto {
   ISBN: string;
 
   @IsInt()
+  @Transform(({ value }) => Number(value))
   @Min(0, { message: 'Available copies cannot be negative' })
   availableCopies: number;
 
   @IsInt()
+  @Transform(({ value }) => Number(value))
   @Min(1, { message: 'There must be at least one copy' })
   copies: number;
 
@@ -67,8 +71,8 @@ export class CreateBookDto {
   @Transform(({ value }) => value.trim())
   publisher: string;
 
-  @IsUrl({}, { message: 'Invalid image URL format' })
-  @IsOptional()
-  @Transform(({ value }) => value.trim())
-  imageURL?: string;
+  // @IsUrl({}, { message: 'Invalid image URL format' })
+  // @IsOptional()
+  // @Transform(({ value }) => value.trim())
+  // imageURL?: string;
 }

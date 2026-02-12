@@ -21,7 +21,8 @@ export default function Books({ books }: { books: Book[] }) {
             <Link href={`/${book._id}`}>
               <div className="relative">
                 <Image
-                  src={"/bookimage.png"}
+                  // src={"/bookimage.png"}
+                  src={book.imageURL || `/bookimage.png`}
                   alt={book.title}
                   title={book.title}
                   width={200}

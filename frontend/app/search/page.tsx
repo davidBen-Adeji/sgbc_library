@@ -1,7 +1,7 @@
 import Books from "@/ui/books";
 import Pagination from "@/ui/pagination";
 import NotFound from "@/ui/notFound";
-import { fetchBooks } from "@/lib/actions";
+import { fetchBooks } from "@/lib/api/books";
 
 interface Props {
   searchParams: { query: string; page: string };

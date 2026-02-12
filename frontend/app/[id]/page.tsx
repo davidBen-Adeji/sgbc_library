@@ -2,7 +2,7 @@ import BookDetails from "@/app/[id]/ui/bookDetails";
 import BooksSkeleton from "@/ui/booksSkeleton";
 import { Suspense } from "react";
 import BookSuggestions from "@/ui/bookSuggestions";
-import { fetchBook } from "@/lib/actions";
+import { fetchBook } from "@/lib/api/books";
 
 interface Props {
   params: {

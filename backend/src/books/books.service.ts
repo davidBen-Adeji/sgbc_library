@@ -212,7 +212,7 @@ export class BooksService {
     }
   }
 
-  async findByCategory(category: string, page: number, limit: string) {
+  async findByCategory(category: string, page: number, limit: number) {
     if (!category) {
       throw new BadRequestException('Category is required');
     }
@@ -228,10 +228,10 @@ export class BooksService {
     const regex = new RegExp(escapeRegex(category), 'i'); // case-insensitive
 
     try {
-      if (limit && limit === '4') {
+      if (limit && limit === 4) {
         return this.bookModel.aggregate([
           { $match: { category: { $regex: regex } } },
-          { $sample: { size: 4 } },
+          { $sample: { size: limit } },
         ]);
       }
 
@@ -268,7 +268,7 @@ export class BooksService {
     }
   }
 
-  async findByAuthor(author: string, page: number, limit: string) {
+  async findByAuthor(author: string, page: number, limit: number) {
     if (!author) {
       throw new BadRequestException('Author is required');
     }
@@ -281,10 +281,10 @@ export class BooksService {
     const regex = new RegExp(author, 'i'); // case-insensitive
 
     try {
-      if (limit && limit === '4') {
+      if (limit && limit === 4) {
         return this.bookModel.aggregate([
           { $match: { author: { $regex: regex } } },
-          { $sample: { size: 4 } },
+          { $sample: { size: limit } },
         ]);
       }
 

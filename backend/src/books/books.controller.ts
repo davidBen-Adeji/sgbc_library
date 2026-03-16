@@ -85,7 +85,7 @@ export class BooksController {
   findByCategory(
     @Param('category') category: string,
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
-    @Query('limit') limit: string,
+    @Query('limit', new DefaultValuePipe(0), ParseIntPipe) limit: number,
   ) {
     return this.booksService.findByCategory(category, page, limit);
   }
@@ -99,7 +99,7 @@ export class BooksController {
   findByAuthor(
     @Param('author') author: string,
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
-    @Query('limit') limit: string,
+    @Query('limit', new DefaultValuePipe(0), ParseIntPipe) limit: number,
   ) {
     return this.booksService.findByAuthor(author, page, limit);
   }
